@@ -36,7 +36,7 @@ public class personcontroller {
         return "person name added";
     }
 
-    @GetMapping("/firstname/{typedFirstName}")
+    @GetMapping("/persons/{typedFirstName}")
     public List<person> getpersonbyfirstname(@PathVariable String typedFirstName){
         return personService.getpersonbyfirstname(typedFirstName);
     }
@@ -46,7 +46,7 @@ public class personcontroller {
         return personService.getallperson();
     }
 
-    @PutMapping("/firstname/{typedFirstName}")
+    @PutMapping("/persons/{typedFirstName}")
     public ResponseEntity<Void> editpersonbyfirstname(@PathVariable String typedFirstName, @RequestBody String newFirstName){
 
         personService.editpersonbyfirstname(typedFirstName,newFirstName);
@@ -57,7 +57,7 @@ public class personcontroller {
 
 
 
-    @DeleteMapping("/firstname/{typedFirstName}")
+    @DeleteMapping("/persons/{typedFirstName}")
     public ResponseEntity<Void> deletepersonbyfirstname(@PathVariable String typedFirstName){
         personService.deletepersonbyfirstname(typedFirstName);
         HttpHeaders headers = new HttpHeaders();
