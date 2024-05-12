@@ -21,16 +21,22 @@ public class personcontroller {
         person p1= new person();
         p1.setFirstName("Parizaad");
         p1.setLastName("Musa");
+        p1.setId(2024001);
+        p1.setAge(1);
         personService.createperson(p1);
 
         person p2= new person();
         p2.setFirstName("Abu Saleh Md");
         p2.setLastName("Musa");
+        p2.setAge(32);
+        p2.setId(2024002);
         personService.createperson(p2);
 
         person p3= new person();
         p3.setFirstName("Taslima");
         p3.setLastName("Akter");
+        p3.setAge(32);
+        p3.setId(2024003);
         personService.createperson(p3);
 
         return "person name added";

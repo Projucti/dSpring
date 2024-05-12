@@ -4,6 +4,15 @@ public class person {
     private String firstName;
     private String lastName;
     private int id;
+    private int age;
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
 
     public int getId() {
         return id;
