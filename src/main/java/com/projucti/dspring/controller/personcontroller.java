@@ -5,9 +5,12 @@ import com.projucti.dspring.model.person;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Collections;
 import java.util.List;
 
 
@@ -48,8 +51,22 @@ public class personcontroller {
     }
 
     @GetMapping("/persons")
-    public List<person> getallperson(){
-        return personService.getallperson();
+    public ResponseEntity<List<person>> getallperson(
+    @RequestParam(defaultValue = "0") int page,
+    @RequestParam(defaultValue = "10") int size) {
+        List<person> allPersons= personService.getallperson();
+        List<person> persons = paginate(allPersons, page, size);
+        return new ResponseEntity<>(persons, HttpStatus.OK);
+    }
+
+    // Helper method to paginate a list
+    private List<person> paginate(List<person> allPersonslist, int page, int size) {
+        int startIndex = page * size;
+        if (startIndex >= allPersonslist.size()) {
+            return Collections.emptyList(); // Return empty list if page is out of range
+        }
+        int endIndex = Math.min(startIndex + size, allPersonslist.size());
+        return allPersonslist.subList(startIndex, endIndex);
     }
 
     @PutMapping("/persons/{typedFirstName}")
