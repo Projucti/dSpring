@@ -6,7 +6,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
-public class person {
+public class Person {
     private String firstName;
     private String lastName;
     @Id
@@ -14,13 +14,11 @@ public class person {
     private Long id;
     private int age;
 
-    public person() {
-    }
+    public Person() {}
 
-    public person(String firstName, String lastName, Long id, int age) {
+    public Person(String firstName, String lastName, int age) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.id = id;
         this.age = age;
     }
 
