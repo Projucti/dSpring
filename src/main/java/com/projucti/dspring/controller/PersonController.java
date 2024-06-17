@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 
 @RestController
@@ -56,14 +57,33 @@ public class PersonController {
 //    }
 
     @PutMapping("/{typedId}")
-    public ResponseEntity<Void> editPerson(@PathVariable Long typedId, @RequestBody Person p){
+    public ResponseEntity<Person> editPerson(@PathVariable Long typedId, @RequestBody Person p){
 
         try {
             personService.editPerson(typedId, p);
-            return ResponseEntity.noContent().build();
+            return new ResponseEntity<>(p, HttpStatus.ACCEPTED);
         }
         catch (RuntimeException e){
-            return ResponseEntity.notFound().build();
+            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+        }
+    }
+
+    @PatchMapping("/{typedId}")
+    public ResponseEntity<Person> editPersonSingleInfo(@PathVariable Long typedId, @RequestBody Map<String,Object> info){
+
+        try {
+            Person editedPerson = personService.editPersonSingleInfo(typedId, info);
+            if (editedPerson != null)
+            {
+                return new ResponseEntity<>(editedPerson, HttpStatus.ACCEPTED);
+            }
+            else {
+                return ResponseEntity.notFound().build();
+            }
+
+        }
+        catch (RuntimeException e){
+            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
         }
     }
 
