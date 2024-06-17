@@ -3,6 +3,7 @@ package com.projucti.dspring.service;
 import com.projucti.dspring.model.Person;
 
 import java.util.List;
+import java.util.Map;
 
 
 public interface PersonService{
@@ -11,4 +12,6 @@ public interface PersonService{
      Person getPerson(Long id);
      void deletePerson(Long id);
      Person editPerson(Long id, Person newPerson);
+     Person editPersonSingleInfo(Long id, Map<String, Object> info);
+
 }
