@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -31,30 +32,30 @@ public class PersonController {
     }
 
 
+//    @GetMapping
+//    public List<Person> getAllPersons(){
+//        List<Person> allPersons=personService.getAllPersons();
+//        return allPersons;
+//    }
+
     @GetMapping
-    public List<Person> getAllPersons(){
-        List<Person> allPersons=personService.getAllPersons();
-        return allPersons;
+    public ResponseEntity<List<Person>> getAllPerson(
+    @RequestParam(defaultValue = "0") int page,
+    @RequestParam(defaultValue = "10") int size) {
+        List<Person> allPersons= personService.getAllPersons();
+        List<Person> persons = paginate(allPersons, page, size);
+        return new ResponseEntity<>(persons, HttpStatus.OK);
     }
 
-//    @GetMapping
-//    public ResponseEntity<List<Person>> getAllPerson(
-//    @RequestParam(defaultValue = "0") int page,
-//    @RequestParam(defaultValue = "10") int size) {
-//        List<Person> allPersons= personService.getAllPersons();
-//        List<Person> persons = paginate(allPersons, page, size);
-//        return new ResponseEntity<>(persons, HttpStatus.OK);
-//    }
-
-    // Helper method to paginate a list
-//    private List<Person> paginate(List<Person> allPersonslist, int page, int size) {
-//        int startIndex = page * size;
-//        if (startIndex >= allPersonslist.size()) {
-//            return Collections.emptyList(); // Return empty list if page is out of range
-//        }
-//        int endIndex = Math.min(startIndex + size, allPersonslist.size());
-//        return allPersonslist.subList(startIndex, endIndex);
-//    }
+     //Helper method to paginate a list
+    private List<Person> paginate(List<Person> allPersonslist, int page, int size) {
+        int startIndex = page * size;
+        if (startIndex >= allPersonslist.size()) {
+            return Collections.emptyList(); // Return empty list if page is out of range
+        }
+        int endIndex = Math.min(startIndex + size, allPersonslist.size());
+        return allPersonslist.subList(startIndex, endIndex);
+    }
 
     @PutMapping("/{typedId}")
     public ResponseEntity<Person> editPerson(@PathVariable Long typedId, @RequestBody Person p){
