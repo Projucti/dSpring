@@ -67,7 +67,7 @@ public class PersonController {
     }
 
     @PatchMapping("/{typedId}")
-    public ResponseEntity<Person> editPersonSingleInfo(@PathVariable Long typedId, @RequestBody Map<String,Object> info){
+    public ResponseEntity<Person> editPersonSingleInfo(@PathVariable Long typedId, @Valid @RequestBody Map<String,Object> info){
 
         try {
             Person editedPerson = personService.editPersonSingleInfo(typedId, info);
