@@ -2,10 +2,12 @@ package com.projucti.dspring.controller;
 
 import com.projucti.dspring.model.Person;
 import com.projucti.dspring.service.PersonService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
@@ -15,13 +17,14 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/persons")
+@Validated
 public class PersonController {
 
     @Autowired
     private PersonService personService;
 
     @PostMapping
-    public ResponseEntity<Person> createPerson(@RequestBody Person p) {
+    public ResponseEntity<Person> createPerson(@Valid @RequestBody Person p) {
         personService.addPerson(p);
         return new ResponseEntity<>(p, HttpStatus.CREATED);
     }
@@ -31,12 +34,6 @@ public class PersonController {
         return personService.getPerson(typedId);
     }
 
-
-//    @GetMapping
-//    public List<Person> getAllPersons(){
-//        List<Person> allPersons=personService.getAllPersons();
-//        return allPersons;
-//    }
 
     @GetMapping
     public ResponseEntity<List<Person>> getAllPerson(
@@ -58,7 +55,7 @@ public class PersonController {
     }
 
     @PutMapping("/{typedId}")
-    public ResponseEntity<Person> editPerson(@PathVariable Long typedId, @RequestBody Person p){
+    public ResponseEntity<Person> editPerson(@PathVariable Long typedId, @Valid @RequestBody Person p){
 
         try {
             personService.editPerson(typedId, p);

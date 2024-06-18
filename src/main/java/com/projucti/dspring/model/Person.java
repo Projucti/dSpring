@@ -4,10 +4,13 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 public class Person {
+    @NotNull(message= "First name can not be empty")
     private String firstName;
+    @NotNull(message= "Last name can not be empty")
     private String lastName;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
