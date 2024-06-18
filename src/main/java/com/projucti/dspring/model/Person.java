@@ -6,13 +6,18 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 @Entity
 public class Person {
     @NotNull(message= "First name can not be empty")
+    @Size(min = 2, max = 100, message = "First name must be between 2 to 100")
     private String firstName;
+
     @NotNull(message= "Last name can not be empty")
+    @Size(min = 2, max = 100, message = "First name must be between 2 to 100")
     private String lastName;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
