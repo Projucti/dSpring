@@ -45,4 +45,12 @@ public class PersonServiceImpTest {
 
         verify(personRepository, times(1)).save(person);
     }
+
+    @Test
+    public void testDeletePerson(){
+        Long id = 1L; //dummy id
+        doNothing().when(personRepository).deleteById(id);
+        personServiceImp.deletePerson(id);
+        verify(personRepository,times(1)).deleteById(id);
+    }
 }
