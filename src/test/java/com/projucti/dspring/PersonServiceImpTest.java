@@ -47,6 +47,18 @@ public class PersonServiceImpTest {
     }
 
     @Test
+    public void testGetPerson(){
+        Long id =1L;
+        Person person= new Person();
+        person.setId(id);
+        person.setFirstName("Jane");
+        person.setLastName("John");
+        person.setAge(30);
+
+
+    }
+
+    @Test
     public void testDeletePerson(){
         Long id = 1L; //dummy id
         doNothing().when(personRepository).deleteById(id);
