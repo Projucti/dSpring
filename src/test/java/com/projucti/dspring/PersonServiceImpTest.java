@@ -9,6 +9,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
@@ -55,6 +57,15 @@ public class PersonServiceImpTest {
         person.setLastName("John");
         person.setAge(30);
 
+        when(personRepository.findById(id)).thenReturn(Optional.of(person)); //isolating behavior
+
+        Person foundPerson= personServiceImp.getPerson(id);
+
+        assertNotNull(foundPerson);
+        assertEquals(foundPerson.getFirstName(), person.getFirstName());
+        assertEquals(foundPerson.getLastName(), person.getLastName());
+        assertEquals(foundPerson.getAge(),person.getAge());
+        verify(personRepository,times(1)).findById(id);
 
     }
 
