@@ -9,6 +9,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -66,7 +68,41 @@ public class PersonServiceImpTest {
         assertEquals(foundPerson.getLastName(), person.getLastName());
         assertEquals(foundPerson.getAge(),person.getAge());
         verify(personRepository,times(1)).findById(id);
+    }
 
+    @Test
+    public void testGetAllPersons(){
+        Long id1 =1L;
+        Person personOne= new Person();
+        personOne.setId(id1);
+        personOne.setFirstName("Jane");
+        personOne.setLastName("John");
+        personOne.setAge(30);
+
+        Long id2 =2L;
+        Person personTwo= new Person();
+        personTwo.setId(id2);
+        personTwo.setFirstName("Caroline");
+        personTwo.setLastName("Channing");
+        personTwo.setAge(28);
+
+        List<Person> personList= Arrays.asList(personOne,personTwo);
+
+        when(personRepository.findAll()).thenReturn(personList);
+
+        List<Person> resultList= personServiceImp.getAllPersons();
+
+        assertNotNull(resultList);
+        assertEquals(2, resultList.size());
+
+        assertEquals("Jane", resultList.get(0).getFirstName());
+        assertEquals("John", resultList.get(0).getLastName());
+        assertEquals(30, resultList.get(0).getAge());
+
+        assertEquals("Caroline", resultList.get(1).getFirstName());
+        assertEquals("Channing", resultList.get(1).getLastName());
+        assertEquals(28, resultList.get(1).getAge());
+        verify(personRepository, times(1)).findAll();
     }
 
     @Test
