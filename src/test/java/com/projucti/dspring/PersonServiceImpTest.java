@@ -106,6 +106,39 @@ public class PersonServiceImpTest {
     }
 
     @Test
+    public void testEditPersonFound(){
+        Long id =1L;
+        Person personOld= new Person();
+        personOld.setId(id);
+        personOld.setFirstName("Jane");
+        personOld.setLastName("John");
+        personOld.setAge(30);
+
+        Person personNew= new Person();
+        personNew.setLastName("Doe");
+        personNew.setAge(24);
+
+        when(personRepository.existsById(id)).thenReturn(true);
+        when(personRepository.save(any(Person.class))).thenReturn(personNew);
+
+        Person updatedPerson= personServiceImp.editPerson(id, personNew);
+        assertNotNull(updatedPerson);
+        assertEquals(24, updatedPerson.getAge());
+        assertEquals("Doe", updatedPerson.getLastName());
+        assertEquals(id, updatedPerson.getId());
+
+        verify(personRepository, times(1)).existsById(id);
+        verify(personRepository, times(1)).save(personNew);
+
+    }
+
+    @Test
+    public void testEditPersonNotFound(){
+
+
+    }
+
+    @Test
     public void testDeletePerson(){
         Long id = 1L; //dummy id
         doNothing().when(personRepository).deleteById(id);
