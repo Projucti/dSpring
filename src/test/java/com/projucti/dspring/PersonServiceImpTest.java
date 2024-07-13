@@ -5,26 +5,28 @@ import com.projucti.dspring.repository.PersonRepository;
 import com.projucti.dspring.service.PersonServiceImp;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
+@ExtendWith(MockitoExtension.class)
 public class PersonServiceImpTest {
     @Mock
     private PersonRepository personRepository;
 
     @InjectMocks
     private PersonServiceImp personServiceImp;
-
+    
     @BeforeEach
     public void SetUp()
     {
@@ -134,7 +136,17 @@ public class PersonServiceImpTest {
 
     @Test
     public void testEditPersonNotFound(){
+        Long id =1L;
+        Person personNew= new Person();
+        personNew.setLastName("Doe");
+        personNew.setAge(24);
 
+//        when(personRepository.existsById(id)).thenReturn(false);
+//        RuntimeException runtimeException= assertThrows(RuntimeException.class, ()->{
+//        personServiceImp.editPerson(id, personNew);});
+//        assertEquals("Person not found", runtimeException.getMessage());
+//        verify(personRepository, times(0)).save(personNew);
+//        verify(personRepository, times(1)).existsById(id);
 
     }
 
