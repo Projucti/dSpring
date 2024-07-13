@@ -141,12 +141,12 @@ public class PersonServiceImpTest {
         personNew.setLastName("Doe");
         personNew.setAge(24);
 
-//        when(personRepository.existsById(id)).thenReturn(false);
-//        RuntimeException runtimeException= assertThrows(RuntimeException.class, ()->{
-//        personServiceImp.editPerson(id, personNew);});
-//        assertEquals("Person not found", runtimeException.getMessage());
-//        verify(personRepository, times(0)).save(personNew);
-//        verify(personRepository, times(1)).existsById(id);
+        when(personRepository.existsById(id)).thenReturn(false);
+        RuntimeException runtimeException= assertThrows(RuntimeException.class, ()->{
+        personServiceImp.editPerson(id, personNew);});
+        assertEquals("Person not found", runtimeException.getMessage());
+        verify(personRepository, times(0)).save(personNew);
+        verify(personRepository, times(1)).existsById(id);
 
     }
 
