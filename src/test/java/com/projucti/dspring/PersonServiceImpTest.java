@@ -11,9 +11,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -149,6 +147,35 @@ public class PersonServiceImpTest {
         verify(personRepository, times(1)).existsById(id);
 
     }
+
+    @Test
+    public void testEditPersonSingleInfo_FirstName(){
+        Long id =1L;
+        Person person= new Person();
+        person.setId(id);
+        person.setFirstName("Jane");
+        person.setLastName("John");
+        person.setAge(30);
+
+        Map<String,Object> updates= new HashMap<>();
+        updates.put("firstName","Snow");
+
+        when(personRepository.findById(person.getId())).thenReturn(Optional.of(person));
+        when(personRepository.save(person)).thenReturn(person);
+
+
+        Person updatedPerson= personServiceImp.editPersonSingleInfo(person.getId(),updates);
+        assertNotNull(updatedPerson);
+        assertEquals("Snow", updatedPerson.getFirstName());
+        assertEquals("John", updatedPerson.getLastName());
+        assertEquals(30, updatedPerson.getAge());
+
+        verify(personRepository, times(1)).findById(person.getId());
+        verify(personRepository, times(1)).save(updatedPerson);
+    }
+
+
+
 
     @Test
     public void testDeletePerson(){
