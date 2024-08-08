@@ -1,4 +1,4 @@
-package com.projucti.dspring;
+package com.projucti.dspring.unit;
 
 import com.projucti.dspring.model.Person;
 import com.projucti.dspring.repository.PersonRepository;
@@ -50,6 +50,7 @@ public class PersonServiceImpTest {
         verify(personRepository, times(1)).save(person);
     }
 
+
     @Test
     public void testGetPerson(){
         Long id =1L;
@@ -69,7 +70,6 @@ public class PersonServiceImpTest {
         assertEquals(foundPerson.getAge(),person.getAge());
         verify(personRepository,times(1)).findById(id);
     }
-
     @Test
     public void testGetAllPersons(){
         Long id1 =1L;
@@ -105,6 +105,7 @@ public class PersonServiceImpTest {
         verify(personRepository, times(1)).findAll();
     }
 
+
     @Test
     public void testEditPersonFound(){
         Long id =1L;
@@ -131,7 +132,6 @@ public class PersonServiceImpTest {
         verify(personRepository, times(1)).save(personNew);
 
     }
-
     @Test
     public void testEditPersonNotFound(){
         Long id =1L;
@@ -147,6 +147,7 @@ public class PersonServiceImpTest {
         verify(personRepository, times(1)).existsById(id);
 
     }
+
 
     @Test
     public void testEditPersonSingleInfo_FirstName(){
@@ -223,8 +224,6 @@ public class PersonServiceImpTest {
         verify(personRepository, times(1)).findById(person.getId());
         verify(personRepository, times(1)).save(updatedPerson);
     }
-
-
 
 
     @Test
