@@ -173,7 +173,31 @@ public class PersonServiceImpTest {
         verify(personRepository, times(1)).findById(person.getId());
         verify(personRepository, times(1)).save(updatedPerson);
     }
+    @Test
+    public void testEditPersonSingleInfo_LastName(){
+        Long id =1L;
+        Person person= new Person();
+        person.setId(id);
+        person.setFirstName("Jane");
+        person.setLastName("John");
+        person.setAge(30);
 
+        Map<String,Object> updates= new HashMap<>();
+        updates.put("lastName","Snow");
+
+        when(personRepository.findById(person.getId())).thenReturn(Optional.of(person));
+        when(personRepository.save(person)).thenReturn(person);
+
+
+        Person updatedPerson= personServiceImp.editPersonSingleInfo(person.getId(),updates);
+        assertNotNull(updatedPerson);
+        assertEquals("Jane", updatedPerson.getFirstName());
+        assertEquals("Snow", updatedPerson.getLastName());
+        assertEquals(30, updatedPerson.getAge());
+
+        verify(personRepository, times(1)).findById(person.getId());
+        verify(personRepository, times(1)).save(updatedPerson);
+    }
 
 
 
