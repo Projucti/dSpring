@@ -48,16 +48,22 @@ public class PersonServiceImp implements PersonService{
 
     @Override
     public Person editPersonSingleInfo(Long id, Map<String, Object> info) {
-        Person newPerson= personRepository.findById(id).orElse(null);
-        if(newPerson!=null){
+        Person person= personRepository.findById(id).orElse(null);
+        if(person!=null){
             info.forEach((key, value)->{
                 switch (key){
-                    case("firstName"): newPerson.setFirstName((String) value);
-                    case("lastName"): newPerson.setLastName((String) value);
-                    case("age"): newPerson.setAge((Integer) value);
+                    case("firstName"):
+                        person.setFirstName((String) value);
+                        break;
+                    case("lastName"):
+                        person.setLastName((String) value);
+                        break;
+                    case("age"):
+                        person.setAge((Integer) value);
+                        break;
                 }
             });
-            return personRepository.save(newPerson);
+            return personRepository.save(person);
         }
         else {
             return null;
