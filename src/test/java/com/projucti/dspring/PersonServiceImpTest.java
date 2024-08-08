@@ -198,6 +198,32 @@ public class PersonServiceImpTest {
         verify(personRepository, times(1)).findById(person.getId());
         verify(personRepository, times(1)).save(updatedPerson);
     }
+    @Test
+    public void testEditPersonSingleInfo_Age(){
+        Long id =1L;
+        Person person= new Person();
+        person.setId(id);
+        person.setFirstName("Jane");
+        person.setLastName("John");
+        person.setAge(30);
+
+        Map<String,Object> updates= new HashMap<>();
+        updates.put("age",32);
+
+        when(personRepository.findById(person.getId())).thenReturn(Optional.of(person));
+        when(personRepository.save(person)).thenReturn(person);
+
+
+        Person updatedPerson= personServiceImp.editPersonSingleInfo(person.getId(),updates);
+        assertNotNull(updatedPerson);
+        assertEquals("Jane", updatedPerson.getFirstName());
+        assertEquals("John", updatedPerson.getLastName());
+        assertEquals(32, updatedPerson.getAge());
+
+        verify(personRepository, times(1)).findById(person.getId());
+        verify(personRepository, times(1)).save(updatedPerson);
+    }
+
 
 
 
